@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>徐启娴美照</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #fff0f5;
+            color: #8b4513;
+        }
+        header {
+            background: linear-gradient(45deg, #ffb6c1, #ffc0cb, #ffb6c1);
+            color: #8b4513;
+            text-align: center;
+            padding: 1em;
+            box-shadow: 0 2px 4px rgba(139,69,19,0.1);
+        }
+        h1 {
+            margin: 0;
+            font-size: 2.5em;
+            text-shadow: 2px 2px 4px rgba(139,69,19,0.2);
+        }
+        nav {
+            background: linear-gradient(to right, #ffc0cb, #ffb6c1);
+            padding: 1em;
+            text-align: center;
+        }
+        nav ul {
+            list-style-type: none;
+            padding: 0;
+            margin: 0;
+            display: inline-flex;
+            justify-content: center;
+            background-color: rgba(255, 255, 255, 0.7);
+            border-radius: 30px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        nav ul li {
+            margin: 0;
+        }
+        nav ul li a {
+            color: #ff69b4;
+            text-decoration: none;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            padding: 0.8em 1.2em;
+            display: block;
+            position: relative;
+            overflow: hidden;
+            white-space: nowrap;
+        }
+        nav ul li a:hover {
+            color: #ff1493;
+            background-color: rgba(255, 105, 180, 0.2);
+        }
+        .gallery {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 2em;
+            min-height: calc(100vh - 200px);
+        }
+        .photo-container {
+            margin: 1em;
+            background-color: white;
+            border-radius: 15px;
+            box-shadow: 0 8px 16px rgba(0,0,0,0.1);
+            overflow: hidden;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            max-width: 90%;
+            width: auto;
+            height: auto;
+        }
+        .photo-container:hover {
+            transform: scale(1.02);
+            box-shadow: 0 12px 24px rgba(0,0,0,0.15);
+        }
+        .photo {
+            width: 100%;
+            height: auto;
+            max-height: 75vh;
+            object-fit: cover;
+            display: block;
+        }
+        .photo-description {
+            padding: 1.5em;
+            text-align: center;
+            font-size: 1.3em;
+            color: #8b4513;
+            background-color: rgba(255, 245, 238, 0.8);
+        }
+        .next-photo {
+            margin-top: 2em;
+            text-align: center;
+        }
+        .next-button {
+            background-color: #ff69b4;
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            font-size: 1.2em;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+        .next-button:hover {
+            background-color: #ff1493;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 8px rgba(0,0,0,0.15);
+        }
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0,0,0,0.4);
+        }
+        .modal-content {
+            background-color: #fefefe;
+            margin: 15% auto;
+            padding: 20px;
+            border: 1px solid #888;
+            width: 80%;
+            max-width: 500px;
+            text-align: center;
+            border-radius: 10px;
+        }
+        .modal-button {
+            background-color: #ff69b4;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            margin: 10px;
+            font-size: 1em;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        .modal-button:hover {
+            background-color: #ff1493;
+        }
+        #surprise-container {
+            display: none;
+            max-width: 90%;
+            width: auto;
+            margin: 1em auto;
+            background-color: white;
+            border-radius: 15px;
+            box-shadow: 0 8px 16px rgba(0,0,0,0.1);
+            overflow: hidden;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        #surprise-container:hover {
+            transform: scale(1.02);
+            box-shadow: 0 12px 24px rgba(0,0,0,0.15);
+        }
+        #surprise-photo {
+            width: 100%;
+            height: auto;
+            max-height: 75vh;
+            object-fit: cover;
+            display: block;
+        }
+        #surprise-description {
+            padding: 1.5em;
+            text-align: center;
+            font-size: 1.3em;
+            color: #8b4513;
+            background-color: rgba(255, 245, 238, 0.8);
+        }
+        .back-button {
+            display: block;
+            margin: 2em auto;
+            background-color: #ff69b4;
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            font-size: 1.2em;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+        .back-button:hover {
+            background-color: #ff1493;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 8px rgba(0,0,0,0.15);
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>徐启娴美照</h1>
+    </header>
+    <nav>
+        <ul>
+            <li><a href="index.html">首页</a></li>
+            <li><a href="photos.html">徐启娴美照</a></li>
+            <li><a href="beauty.html">徐启娴大美女</a></li>
+            <li><a href="best.html">徐启娴天下第一</a></li>
+        </ul>
+    </nav>
+    <div class="gallery">
+        <div id="photo-display" class="photo-container">
+            <img id="current-photo" src="" alt="徐启娴照片" class="photo">
+            <div id="photo-description" class="photo-description"></div>
+        </div>
+        <div id="surprise-container" class="photo-container">
+            <img id="surprise-photo" src="photo.6.jpg" alt="惊喜照片" class="photo">
+            <div id="surprise-description" class="photo-description">哈哈哈哈是的没错就是小时候的我</div>
+        </div>
+        <div class="next-photo">
+            <p>准备好欣赏下一张beautiful photo了嘛？</p>
+            <button id="next-button" class="next-button">Yes！</button>
+        </div>
+    </div>
+    <div id="end-modal" class="modal">
+        <div class="modal-content">
+            <p>您已看完所有照片</p>
+            <button id="restart-button" class="modal-button">再看一遍</button>
+            <button id="surprise-button" class="modal-button">点击有惊喜</button>
+        </div>
+    </div>
+    <div id="surprise-modal" class="modal">
+        <div class="modal-content">
+            <p>准备好看见世界上最可爱的小女孩了吗？</p>
+            <button id="ready-button" class="modal-button">我准备好了！</button>
+        </div>
+    </div>
+    <button id="back-button" class="back-button" style="display: none;">返回照片集</button>
+
+    <script>
+        const photos = [
+            { src: 'C:/Users/好运连连/Desktop/xqx美照/_cgi-bin_mmwebwx-bin_webwxgetmsgimg__&MsgID=6195214601001241090&skey=@crypt_baeeca30_d26ae5233b34648614be88ac23e33190&mmweb_appid=wx_webfilehelper.jfif', description: '美美吃饭' },
+            { src: 'C:/Users/好运连连/Desktop/xqx美照/_cgi-bin_mmwebwx-bin_webwxgetmsgimg__&MsgID=5652305421475772283&skey=@crypt_baeeca30_d26ae5233b34648614be88ac23e33190&mmweb_appid=wx_webfilehelper.jfif', description: '在植物园' },
+            { src: 'C:/Users/好运连连/Desktop/xqx美照/_cgi-bin_mmwebwx-bin_webwxgetmsgimg__&MsgID=3012320896461224789&skey=@crypt_baeeca30_d26ae5233b34648614be88ac23e33190&mmweb_appid=wx_webfilehelper.jfif', description: 'birthday！' },
+            { src: 'C:/Users/好运连连/Desktop/xqx美照/_cgi-bin_mmwebwx-bin_webwxgetmsgimg__&MsgID=8995091289801291359&skey=@crypt_baeeca30_d26ae5233b34648614be88ac23e33190&mmweb_appid=wx_webfilehelper.jfif', description: '带头纱喽' },
+            { src: 'C:/Users/好运连连/Desktop/xqx美照/photo.5.jpg', description: '女明星在南京' }
+        ];
+
+        let currentPhotoIndex = 0;
+        let hasSeenAllPhotos = false;
+
+        function displayPhoto(index) {
+            const photo = photos[index];
+            document.getElementById('current-photo').src = photo.src;
+            document.getElementById('photo-description').textContent = photo.description;
+        }
+
+        function nextPhoto() {
+            currentPhotoIndex = (currentPhotoIndex + 1) % photos.length;
+            if (currentPhotoIndex === 0) {
+                hasSeenAllPhotos = true;
+                document.getElementById('end-modal').style.display = 'block';
+            } else {
+                displayPhoto(currentPhotoIndex);
+            }
+        }
+
+        document.getElementById('next-button').addEventListener('click', nextPhoto);
+
+        document.getElementById('restart-button').addEventListener('click', function() {
+            document.getElementById('end-modal').style.display = 'none';
+            currentPhotoIndex = 0;
+            hasSeenAllPhotos = false;
+            displayPhoto(currentPhotoIndex);
+        });
+
+        document.getElementById('surprise-button').addEventListener('click', function() {
+            document.getElementById('end-modal').style.display = 'none';
+            document.getElementById('surprise-modal').style.display = 'block';
+        });
+
+        document.getElementById('ready-button').addEventListener('click', function() {
+            document.getElementById('surprise-modal').style.display = 'none';
+            document.getElementById('surprise-container').style.display = 'block';
+            document.getElementById('back-button').style.display = 'block';
+            document.getElementById('photo-display').style.display = 'none';
+            document.querySelector('.next-photo').style.display = 'none';
+        });
+
+        document.getElementById('back-button').addEventListener('click', function() {
+            document.getElementById('surprise-container').style.display = 'none';
+            document.getElementById('back-button').style.display = 'none';
+            document.getElementById('photo-display').style.display = 'block';
+            document.querySelector('.next-photo').style.display = 'block';
+            currentPhotoIndex = 0;
+            displayPhoto(currentPhotoIndex);
+        });
+
+        // 显示第一张照片
+        displayPhoto(currentPhotoIndex);
+    </script>
+</body>
+</html>
